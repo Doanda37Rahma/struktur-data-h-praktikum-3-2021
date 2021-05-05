@@ -173,7 +173,8 @@ AC saat Praktikum
 Diberikan kata-kata yang dipisah oleh whitespace, program diminta mengeluarkan output terurut secara abjad: pertama, dengan format penomoran (mulai 1.) perbaris, kedua, dipisah oleh "--<3--" dalam satu baris
 ### Penjelasan Solusi
 #### Fungsi `main()`
-Program menggunakan AVL Tree untuk menyimpan data tipe string. Untuk setiap kata akan dimasukkan ke dalam tree. note: 
+Program menggunakan AVL Tree untuk menyimpan data tipe string. Untuk setiap kata akan dimasukkan ke dalam tree.
+>>Dalam hackerrank, jika ada loop cin tanpa henti maka menginput kata terakhir yang diinput, maka untuk menghentikan stream input apabila sama dg input sebelumnya.
 ```
 int main(int argc, char const *argv[])
 {
@@ -353,7 +354,7 @@ AC saat Praktikum
 ### Bukti
 ![BUKTI](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/b_bukti.png)
 ### Penjelasan Soal
-Ter
+Terdapat dua
 ### Penjelasan Solusi
 ### Visualisasi Solusi
 ![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/b_visual.png)
