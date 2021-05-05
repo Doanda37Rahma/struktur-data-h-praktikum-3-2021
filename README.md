@@ -37,9 +37,132 @@ AC saat Revisi
 ### Bukti
 ![BUKTI](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/mn_bukti.png)
 ### Penjelasan Soal
+Diberikan sebuah AVL Tree, program diminta menghitung dan mengoutput jumlah setiap kolom dalam tree
 ### Penjelasan Solusi
+Disini penting untuk mengidentifikasi perbedaan horizontal antara node dengan root. Perbedaan ini direpresentasikan dalam index dua array `rightSum` untuk bagian kanan/tengah dan `leftSum` untuk bagian kiri tree (jaraknya dinegatifkan).
+```
+struct AVL
+{
+private:
+...
+	int rightSum[MAX_ARR],
+	leftSum[MAX_ARR],
+	rightDistance,
+	leftDistance;
+...
+```
+#### Fungsi `_findLeftDistance()` dan `_findRightDistance()`
+Sebelumnya, karena menggunakan array static, maka perlu menentukan batas-batas/range index nya:
+Kedua fungsi ini menelusuri tree dari center ke ujung kanan dan kiri dan mengembalikan jarak maksimal node paling kiri dan kanan tree terhadap node root
+```
+    int _findLeftDistance(AVLNode* node)
+    {
+        int ld=0;
+        while (node && node->left) {
+            node = node->left;
+            ld++;
+        }
+        return ld;
+    }
+ 
+    int _findRightDistance(AVLNode* node) {
+        int rd=0;
+        while (node && node->right) {
+            node = node->right;
+            rd++;
+        }
+        return rd;
+    }
+```
+#### Fungsi `_updateSum()`
+Fungsi ini adalah fungsi yang menelusuri tree untuk mengupdate isi array (jumlah tiap kolom). 
+```
+   void _updateSum(AVLNode *node, int index)
+    {
+        if (node != NULL) {
+            if (index>=0) {  // untuk bagian kanan tree
+                rightSum[index]+=node->data;    // menambah jumlah suatu kolom
+            }
+            else if (index<0) {  // untuk bagian kiri tree
+                if (index*-1>leftDistance)  // jika terdapat node yang lebih dalam dan lebih kiri dari tree, 
+                    leftDistance++;		// maka jarak kiri maksimal juga diupdate
+                leftSum[index*-1]+=node->data;   // menambah jumlah suatu kolom
+            }
+            _updateSum(node->left, index-1);  // telusur ke kanan
+            _updateSum(node->right, index+1);  //         ke kiri
+        }
+    }
+```
+#### Fungsi `printVerticalSum()`
+Fungsi ini merupakan fungsi utama untuk mengeluarkan output
+```
+    void printVerticalSum() {
+        leftDistance = _findLeftDistance(_root);    // mencari jarak kiri maks
+        rightDistance = _findRightDistance(_root);  // mencari jarak kanan maks
+        for (int i=0; i<MAX_ARR; i++) {		// mengisi array dengan 0
+        	leftSum[i] = rightSum[i] = 0;
+		}
+        _updateSum(_root, 0);  // menjumlah sum tiap kolom
+        for (int i=leftDistance; i>0 ;i--) {  // mengeluarkan sum dari kolom kiri paling jauh (jarak ke kiri terbesar)
+            cout << leftSum[i] << " ";
+        }
+        for (int i=0 ; i<=rightDistance ; i++) {  // mengeluarkan sum dari kolom terdekat (jarak 0) ke kanan
+            cout << rightSum[i] << " ";
+        }
+        cout << endl;
+	}
+```
+#### Fungsi `main()`
+Dalam fungsi main, program menerima antara dua command, jika `insert` maka memasukkan angka ke dalam tree, dan jika `print` maka mengoutputkan jumlah setiap kolom tree yang ada
+```
+int main()
+{
+    AVL tree;
+    tree.init();
+
+    int t;
+    char s[101];
+
+    cin >> t;
+    for (int i=0; i<t; i++) {
+	    scanf("%s", s);
+	    string cmd = s;
+	        if (cmd == "insert") {
+	            int x;
+	            scanf("%d",&x);
+	            tree.insert(x);
+	        } else if (cmd == "print") {
+	            if (!tree.isEmpty()) 
+		            tree.printVerticalSum();
+	        }
+    }
+    return 0;
+}
+```
+
+
 ### Visualisasi Solusi
+Contoh Input:
+```
+9
+insert 20
+insert 10
+insert 15
+insert 9
+insert 6
+insert 25
+insert 24
+insert 26
+print
+```
+Contoh Output:
+```
+6 9 45 24 25 26 
+```
+Disini setiap kolom tree terlihat seperti ini
+
 ![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/mn_visual.png)
+
 
 ## Cayo Niat
 ### Verdict
@@ -47,7 +170,9 @@ AC saat Praktikum
 ### Bukti
 ![BUKTI](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/cn_bukti.png)
 ### Penjelasan Soal
+Diberikan kata-kata yang dipisah oleh whitespace, program diminta mengeluarkan output terurut secara abjad: pertama, dengan format penomoran (mulai 1.) perbaris, kedua, dipisah oleh "--<3--" dalam satu baris
 ### Penjelasan Solusi
+
 ### Visualisasi Solusi
 ![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/cn_visual.png)
 
