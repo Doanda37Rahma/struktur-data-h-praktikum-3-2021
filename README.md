@@ -354,10 +354,91 @@ AC saat Praktikum
 ### Bukti
 ![BUKTI](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/b_bukti.png)
 ### Penjelasan Soal
-Terdapat dua
+Program diminta untuk memasukkan nomor episode dan mengeluarkan posisi suatu episode dalam tumpukan (kecil ke besar).
 ### Penjelasan Solusi
+Program ini biasanya dapat dibuat dengan priority queue. Tetapi jika menggunakan AVL Tree, maka menggunakan traversal inorder untuk menelusur tree dari nilai terkecil. Jika command adalah `Taro`, maka masukkan angka ke dalam tree, jika `Cari` maka keluarkan posisi dalam tumpukan dalam format `Kasetnya ada di tumpukan ke - n`, jika tidak ditemukan keluarkan `Kasetnya gak ada!`, jika command tidak keduanya, keluarkan `AKU TUH GATAU HARUS NGAPAIN!`.
+#### Fungsi `main()`
+```
+int main(int argc, char const *argv[])
+{
+    AVL set;
+    set.init();
+	
+    int t, ep;
+    char cmd[15];
+	cin >> t;
+	for(int i=0; i<t; i++)
+	{
+		scanf("%s", cmd);
+		scanf("%d", &ep);
+		if (strcmp(cmd,"Taro")==0) {
+			set.insert(ep);
+		} else if (strcmp(cmd,"Cari")==0) {
+			if (set.find(ep)) {
+				cout << "Kasetnya ada di tumpukan ke - " << set.getLocation(ep) << endl;
+			} else {
+				cout << "Kasetnya gak ada!" << endl;
+			}
+		} else {
+			cout << "AKU TUH GATAU HARUS NGAPAIN!" << endl;
+		}
+	}
+	return 0;
+}
+```
+#### Fungsi `getLocation()`
+Fungsi untuk mencari lokasi ep dalam tree
+```
+    int getLocation(int ep) {
+    	int loc=0,      // untuk menghitung posisi
+	    isFound=0;  // menyimpan apakah ep sudah ditemukan
+    	_getLocation(_root,ep,&isFound,&loc);
+    	return loc;
+	}
+
+    void _getLocation(AVLNode *node, int ep, int* isFound, int* loc) {
+	    if (node) {
+	        _getLocation(node->left, ep, isFound, loc);
+	        if (!*isFound)   // menambah counter jika belum ditemukan
+			*loc += 1;   
+	        if(node->data==ep) {  // mengecek apakah node adalah ep
+	        	*isFound=1;  // agar loc tidak lagi bertambah
+	                return;
+	        }
+	        _getLocation(node->right, ep, isFound, loc);
+	    }
+	}
+```
+
 ### Visualisasi Solusi
+Sample Input 0
+```
+11
+Taro 100
+Taro 74
+Cari 100
+Cari 70
+Taro 152
+Taro 21
+Taro 33
+Cari 100
+Cari 21
+Cari 1 
+Liatin 2
+```
+Sample Output 0
+```
+Kasetnya ada di tumpukan ke - 2
+Kasetnya gak ada!
+Kasetnya ada di tumpukan ke - 4
+Kasetnya ada di tumpukan ke - 1
+Kasetnya gak ada!
+AKU TUH GATAU HARUS NGAPAIN!
+```
+Berikut visualisasi untuk baris `Cari 100`:
+
 ![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/b_visual.png)
+![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/b_visual2.png)
 
 ## Nadut Belajar
 ### Verdict
