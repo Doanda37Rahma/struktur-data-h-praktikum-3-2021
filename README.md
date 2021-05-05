@@ -132,6 +132,7 @@ AC saat Praktikum
 ### Bukti
 ![BUKTI](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/b_bukti.png)
 ### Penjelasan Soal
+Ter
 ### Penjelasan Solusi
 ### Visualisasi Solusi
 ![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/b_visual.png)
@@ -142,7 +143,54 @@ AC saat Praktikum
 ### Bukti
 ![BUKTI](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/nb_bukti.png)
 ### Penjelasan Soal
+Program diminta menghitung selisih parent node dengan siblingnya
 ### Penjelasan Solusi
+```
+int main(int argc, char const *argv[])
+{
+    AVL avl;
+    avl.init();
+    
+	int Q,T,n,t;
+	cin >> Q >> T;
+	for (int i=0; i<Q; i++) {
+		cin >> n;
+		avl.insert(n);
+	}
+	for (int i=0; i<T; i++) {
+		cin >> t;
+		cout << avl.parentSiblingDiff(t) << endl;
+	}
+	
+    return 0;
+}
+```
+Program menggunakan ADT AVL tree dengan parrent.
+#### Fungsi `parentSiblingDiff()`
+Berikut fungsi `parentSiblingDiff()` dan penjelasannya
+```
+    int parentSiblingDiff(int value) {
+        
+        AVLNode *temp = _search(_root, value);
+        if (temp!=NULL) {
+            if (temp->parent) { // jika node punnya parent, jika tidak(node=root) keluar 0
+                if (temp->parent->parent) {  // jika parent node juga punya parent, jika tidak maka keluarkan nilai node itu
+                    if (temp->parent->parent->left && temp->parent->parent->right) {  // jika parent node memiliki sibling, hitung perbedaan mutlak
+                        int l=temp->parent->parent->left->data;
+                        int r=temp->parent->parent->right->data;
+                        return (l < r) ? r-l : l-r; 
+                    } else {
+                        return temp->parent->data;
+                    }
+                } else {
+                    return temp->parent->data;
+                }
+            }
+            return 0;
+        }
+        return 0;
+}
+```
 ### Visualisasi Solusi
 ![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/nb_visual.png)
 
