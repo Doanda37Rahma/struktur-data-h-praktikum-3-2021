@@ -172,10 +172,106 @@ AC saat Praktikum
 ### Penjelasan Soal
 Diberikan kata-kata yang dipisah oleh whitespace, program diminta mengeluarkan output terurut secara abjad: pertama, dengan format penomoran (mulai 1.) perbaris, kedua, dipisah oleh "--<3--" dalam satu baris
 ### Penjelasan Solusi
+#### Fungsi `main()`
+Program menggunakan AVL Tree untuk menyimpan data tipe string. Untuk setiap kata akan dimasukkan ke dalam tree. note: 
+```
+int main(int argc, char const *argv[])
+{
+    AVL set;
+    set.init();
+	
+	char s[LEN], p[LEN];
+		
+    strcpy(p,"x");
+    for (int i=0; i<1000; i++)
+    {
+        cin >> s;
+        if (!strcmp(p,s)) break;
+        strcpy(p,s);
+        set.insert(s);
+    }	
+    
+    set.inorderNumbered();
+    set.inorderString();
+	
+    return 0;
+}
+```
+Untuk mengoutputkan secara abjad, terdapat dua fungsi inorder sesuai format:
+#### Fungsi `inorderNumbered()`
+```
+    void inorderNumbered () {
+    	this->_inorderNum(_root);
+    	count = 1;  // var untuk penomoran
+    }
+
+    void _inorderNum(AVLNode *node) {
+        if (node) {
+            _inorderNum(node->left);
+            printf("%d. %s\n", count, node->data);  // print sesuai format penomoran
+            count++;  // penomoran selanjutnya
+            _inorderNum(node->right);
+        }
+    }
+		
+```
+#### Fungsi `inorderString()`
+```
+	void inorderString () {
+		this->_inorderS(_root);
+		printf("\n");
+	}
+
+    void _inorderS(AVLNode *node) {
+        if (node) {
+            _inorderS(node->left);
+            printf("%s",node->data); // print kata
+            if (count < _size)  // memastikan agar "--<3--" tidak diprint setelah kata terakhir
+	            printf("--<3--");
+            count++;
+            _inorderS(node->right);
+        }
+    }
+	
+```
 
 ### Visualisasi Solusi
-![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/cn_visual.png)
+```
+Sample Input 0
 
+Mas      Erki  Guanteng    Poll
+ 
+      Mas     Rifki        Baik Poll
+  
+ Mba                 Inez  Makan   Cintaku   
+ 
+        Aku    Benci   Soal Banyu
+  
+CANDA        Mas Daniel    Saranghae Asdos SDH
+```
+Sample Output 0
+```
+1. Aku
+2. Asdos
+3. Baik
+4. Banyu
+5. Benci
+6. CANDA
+7. Cintaku
+8. Daniel
+9. Erki
+10. Guanteng
+11. Inez
+12. Makan
+13. Mas
+14. Mba
+15. Poll
+16. Rifki
+17. SDH
+18. Saranghae
+19. Soal
+Aku--<3--Asdos--<3--Baik--<3--Banyu--<3--Benci--<3--CANDA--<3--Cintaku--<3--Daniel--<3--Erki--<3--Guanteng--<3--Inez--<3--Makan--<3--Mas--<3--Mba--<3--Poll--<3--Rifki--<3--SDH--<3--Saranghae--<3--Soal
+```
 
 ## Part Time
 ### Verdict
