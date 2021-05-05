@@ -495,6 +495,36 @@ Berikut fungsi `parentSiblingDiff()` dan penjelasannya
 }
 ```
 ### Visualisasi Solusi
+Sample Input 0
+```
+6 4
+7 10 21 45 30 29
+7
+30
+29
+21
+```
+Sample Output 0
+```
+20
+21
+20
+0
+```
+Representasi TREE:
+
 ![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/nb_visual.png)
+
+Case 7: Parent dari node 7 adalah 10, sibling node 10 adalah 30 sehingga selisih nya 20  (output 20)
+
+![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/nb_visual2.png)
+
+Case 30: Parent dari node 30 adalah 21, karena 21 adalah root maka tidak memiliki sibling  (output 21)
+
+![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/nb_visual3.png)
+
+Case 21: Node 21 tidak memiliki parent (output 0)
+
+![VISUAL](https://github.com/Doanda37Rahma/struktur-data-h-praktikum-3-2021/blob/main/img/nb_visual4.png)
 
 
